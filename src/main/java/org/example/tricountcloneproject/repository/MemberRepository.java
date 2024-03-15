@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class MemberRepository {
+public class MemberRepository implements CRDRepository {
     private final NamedParameterJdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
@@ -27,36 +27,41 @@ public class MemberRepository {
                 .usingGeneratedKeyColumns("member_id");
     }
 
+    @Override
     public void save(Member member) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(member);
         Number key = jdbcInsert.executeAndReturnKey(param);
         member.setMember_id(key.longValue());
     }
 
+    @Override
     public void delete(Long id) {
         String sql = "delete from Member where member_id = :id";
         Map<String, Object> param = Map.of("id", id);
         template.update(sql, param);
     }
 
+    @Override
     public Optional<Member> findById(Long id) {
         String sql = "select member_id, user_id, user_pw, nickname" +
                 " from Member where member_id=:id";
         try {
             Map<String, Object> param = Map.of("id", id);
-            Member member = template.queryForObject(sql, param, memberRowMapper());
+            Member member = template.queryForObject(sql, param, rowMapper());
             return Optional.of(member);
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
 
+    @Override
     public List<Member> findAll() {
         String sql = "select member_id, user_id, user_pw, nickname from Member";
-        return template.query(sql, memberRowMapper());
+        return template.query(sql, rowMapper());
     }
 
-    private RowMapper<Member> memberRowMapper() {
+    @Override
+    public RowMapper<Member> rowMapper() {
         return BeanPropertyRowMapper.newInstance(Member.class);
     }
 }
