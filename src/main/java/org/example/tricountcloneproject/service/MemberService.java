@@ -1,9 +1,31 @@
 package org.example.tricountcloneproject.service;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import org.example.tricountcloneproject.entity.Member;
+import org.example.tricountcloneproject.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
-@Slf4j
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 public class MemberService {
+
+    private final MemberRepository memberRepository;
+
+    public void insert(Member member) {
+        memberRepository.save(member);
+    }
+
+    public void delete(Long id) {
+        memberRepository.delete(id);
+    }
+
+    public Member findById(Long id) {
+        return memberRepository.findById(id).get();
+    }
+
+    public List<Member> findAll() {
+        return memberRepository.findAll();
+    }
 }
