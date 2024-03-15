@@ -1,13 +1,12 @@
 package org.example.tricountcloneproject.repository;
 
-import org.example.tricountcloneproject.entity.Member;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface CRDRepository<T> {
-    void save(Member member);
+    void save(T entity);
 
     void delete(Long id);
 
