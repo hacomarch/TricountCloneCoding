@@ -2,7 +2,7 @@ package org.example.tricountcloneproject.entity;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 public class Expense {
@@ -11,5 +11,5 @@ public class Expense {
     private Long settlement_id;
     private String name;
     private BigDecimal amount;
-    private LocalDateTime dateTime;
+    private LocalDate date;
 }
