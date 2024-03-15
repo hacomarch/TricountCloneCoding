@@ -1,4 +1,5 @@
 package org.example.tricountcloneproject.entity;
+
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,5 +12,5 @@ public class Expense {
     private Long settlement_id;
     private String name;
     private BigDecimal amount;
-    private LocalDate date;
+    private LocalDate expense_date;
 }

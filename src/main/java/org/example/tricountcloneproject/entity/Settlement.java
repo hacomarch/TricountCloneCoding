@@ -1,4 +1,5 @@
 package org.example.tricountcloneproject.entity;
+
 import lombok.Data;
 
 @Data
