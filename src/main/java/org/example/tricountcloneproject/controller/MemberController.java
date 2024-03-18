@@ -30,7 +30,7 @@ public class MemberController {
             }
 
             HttpSession session = request.getSession();
-            session.setAttribute(SessionConst.LOGIN_MEMBER, login);
+            session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
             session.getAttributeNames().asIterator()
                     .forEachRemaining(name ->
                             log.info("session name={}, value={}", name, session.getAttribute(name)));
