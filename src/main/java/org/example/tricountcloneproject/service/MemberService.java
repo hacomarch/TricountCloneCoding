@@ -30,6 +30,6 @@ public class MemberService {
     }
 
     public Member login(String user_id, String user_pw) {
-        return memberRepository.login(user_id, user_pw).get();
+        return memberRepository.authenticate(user_id, user_pw).get();
     }
 }

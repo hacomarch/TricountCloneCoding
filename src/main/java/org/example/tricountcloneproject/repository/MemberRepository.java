@@ -50,7 +50,7 @@ public class MemberRepository {
         }
     }
 
-    public Optional<Member> login(String user_id, String password) {
+    public Optional<Member> authenticate(String user_id, String password) {
         String sql = "select * from Member where user_id = :user_id";
         try {
             Map<String, Object> param = Map.of("user_id", user_id);
