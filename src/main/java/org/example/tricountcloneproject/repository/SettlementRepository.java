@@ -1,5 +1,6 @@
 package org.example.tricountcloneproject.repository;
 
+import org.example.tricountcloneproject.entity.Member;
 import org.example.tricountcloneproject.entity.Settlement;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -50,6 +51,17 @@ public class SettlementRepository {
         }
     }
 
+    //정산에 참여한 멤버 가져오기
+    public List<Member> findMembersById(Long id) {
+        String sql = "select distinct m.member_id, m.user_id, m.user_pw, m.nickname" +
+                " from Settlement s" +
+                " join Expense e on s.settlement_id = e.settlement_id" +
+                " join Member m on e.member_id = m.member_id" +
+                " where s.settlement_id = :id";
+        Map<String, Long> param = Map.of("id", id);
+        return template.query(sql, param, memberRowMapper());
+    }
+
     public List<Settlement> findAll() {
         String sql = "select * from Settlement";
         return template.query(sql, rowMapper());
@@ -57,5 +69,9 @@ public class SettlementRepository {
 
     public RowMapper<Settlement> rowMapper() {
         return BeanPropertyRowMapper.newInstance(Settlement.class);
+    }
+
+    public RowMapper<Member> memberRowMapper() {
+        return BeanPropertyRowMapper.newInstance(Member.class);
     }
 }
