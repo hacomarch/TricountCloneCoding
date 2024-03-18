@@ -28,8 +28,8 @@ public class ExpenseService {
         return expenseRepository.findByMemberId(id);
     }
 
-    public List<Expense> findBySettlementId(Long id) {
-        return expenseRepository.findBySettlementId(id);
+    public List<Expense> findBySettlementId(Long id, Long member_id) {
+        return expenseRepository.findBySettlementId(id, member_id);
     }
 
     public List<Expense> findAll() {

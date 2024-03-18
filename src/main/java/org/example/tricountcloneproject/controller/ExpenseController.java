@@ -46,8 +46,15 @@ public class ExpenseController {
 
     @ResponseBody
     @GetMapping("/settlement/{settlement_id}/expenseList")
-    public List<Expense> findBySettlementId(@PathVariable Long settlement_id) {
-        return expenseService.findBySettlementId(settlement_id);
+    public Object findBySettlementId(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
+            Member loginMember,
+            @PathVariable Long settlement_id) {
+        try {
+            return expenseService.findBySettlementId(settlement_id, loginMember.getMember_id());
+        } catch (IllegalStateException e) {
+            return e.getMessage();
+        }
     }
 
     @ResponseBody

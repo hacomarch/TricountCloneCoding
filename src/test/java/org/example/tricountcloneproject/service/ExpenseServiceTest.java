@@ -76,7 +76,7 @@ class ExpenseServiceTest {
     void findBySettlementId() {
         Settlement settlement = settlementService.findById(1L);
         List<Expense> findExpenseBySettlementId =
-                expenseService.findBySettlementId(settlement.getSettlement_id());
+                expenseService.findBySettlementId(settlement.getSettlement_id(), 1L);
         findExpenseBySettlementId.stream()
                 .map(Expense::getSettlement_id)
                 .forEach(settlement_id -> assertEquals(settlement.getSettlement_id(), settlement_id));
@@ -86,8 +86,8 @@ class ExpenseServiceTest {
     @DisplayName("FindAll")
     void findAll() {
         //현재 DB에 정산1, 정산3에 대한 지출만 있다.
-        List<Expense> settlementList1 = expenseService.findBySettlementId(1L);
-        List<Expense> settlementList3 = expenseService.findBySettlementId(3L);
+        List<Expense> settlementList1 = expenseService.findBySettlementId(1L, 1L);
+        List<Expense> settlementList3 = expenseService.findBySettlementId(3L, 1L);
 
         assertEquals(settlementList1.size() + settlementList3.size(),
                 expenseService.findAll().size());
