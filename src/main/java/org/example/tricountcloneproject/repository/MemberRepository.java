@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class MemberRepository implements CRDRepository<Member> {
+public class MemberRepository {
     private final NamedParameterJdbcTemplate template;
     private final SimpleJdbcInsert jdbcInsert;
 
@@ -27,21 +27,18 @@ public class MemberRepository implements CRDRepository<Member> {
                 .usingGeneratedKeyColumns("member_id");
     }
 
-    @Override
     public void save(Member member) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(member);
         Number key = jdbcInsert.executeAndReturnKey(param);
         member.setMember_id(key.longValue());
     }
 
-    @Override
     public void delete(Long id) {
         String sql = "delete from Member where member_id = :id";
         Map<String, Object> param = Map.of("id", id);
         template.update(sql, param);
     }
 
-    @Override
     public Optional<Member> findById(Long id) {
         String sql = "select * from Member where member_id=:id";
         try {
@@ -68,13 +65,11 @@ public class MemberRepository implements CRDRepository<Member> {
         }
     }
 
-    @Override
     public List<Member> findAll() {
         String sql = "select * from Member";
         return template.query(sql, rowMapper());
     }
 
-    @Override
     public RowMapper<Member> rowMapper() {
         return BeanPropertyRowMapper.newInstance(Member.class);
     }
