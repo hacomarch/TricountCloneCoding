@@ -43,7 +43,7 @@ public class SettlementRepository implements CRDRepository<Settlement> {
 
     @Override
     public Optional<Settlement> findById(Long id) {
-        String sql = "select settlement_id, name from Settlement where settlement_id = :id";
+        String sql = "select * from Settlement where settlement_id = :id";
         try {
             Map<String, Long> param = Map.of("id", id);
             Settlement settlement = template.queryForObject(sql, param, rowMapper());
@@ -55,7 +55,7 @@ public class SettlementRepository implements CRDRepository<Settlement> {
 
     @Override
     public List<Settlement> findAll() {
-        String sql = "select settlement_id, name from Settlement";
+        String sql = "select * from Settlement";
         return template.query(sql, rowMapper());
     }
 

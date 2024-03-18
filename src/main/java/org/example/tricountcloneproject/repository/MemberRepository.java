@@ -43,8 +43,7 @@ public class MemberRepository implements CRDRepository<Member> {
 
     @Override
     public Optional<Member> findById(Long id) {
-        String sql = "select member_id, user_id, user_pw, nickname" +
-                " from Member where member_id=:id";
+        String sql = "select * from Member where member_id=:id";
         try {
             Map<String, Object> param = Map.of("id", id);
             Member member = template.queryForObject(sql, param, rowMapper());
@@ -56,7 +55,7 @@ public class MemberRepository implements CRDRepository<Member> {
 
     @Override
     public List<Member> findAll() {
-        String sql = "select member_id, user_id, user_pw, nickname from Member";
+        String sql = "select * from Member";
         return template.query(sql, rowMapper());
     }
 
