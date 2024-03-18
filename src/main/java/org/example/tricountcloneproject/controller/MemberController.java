@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.tricountcloneproject.entity.Login;
 import org.example.tricountcloneproject.entity.Member;
 import org.example.tricountcloneproject.entity.SessionConst;
+import org.example.tricountcloneproject.entity.Settlement;
 import org.example.tricountcloneproject.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,6 +71,12 @@ public class MemberController {
     @GetMapping("/member/{id}")
     public Member findById(@PathVariable Long id) {
         return memberService.findById(id);
+    }
+
+    @ResponseBody
+    @GetMapping("/member/{id}/settlements")
+    public List<Settlement> findSettlementsById(@PathVariable Long id) {
+        return memberService.findSettlementsById(id);
     }
 
     @ResponseBody

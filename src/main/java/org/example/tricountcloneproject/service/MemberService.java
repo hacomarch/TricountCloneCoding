@@ -2,6 +2,7 @@ package org.example.tricountcloneproject.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.entity.Member;
+import org.example.tricountcloneproject.entity.Settlement;
 import org.example.tricountcloneproject.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,10 @@ public class MemberService {
 
     public Member findById(Long id) {
         return memberRepository.findById(id).get();
+    }
+
+    public List<Settlement> findSettlementsById(Long id) {
+        return memberRepository.findSettlementListById(id);
     }
 
     public List<Member> findAll() {
