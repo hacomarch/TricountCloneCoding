@@ -36,14 +36,14 @@ public class SettlementRepository {
 
     public void delete(Long id) {
         String sql = "delete from Settlement where settlement_id = :id";
-        Map<String, Long> param = Map.of("id", id);
+        Map<String, Object> param = Map.of("id", id);
         template.update(sql, param);
     }
 
     public Optional<Settlement> findById(Long id) {
         String sql = "select * from Settlement where settlement_id = :id";
         try {
-            Map<String, Long> param = Map.of("id", id);
+            Map<String, Object> param = Map.of("id", id);
             Settlement settlement = template.queryForObject(sql, param, rowMapper());
             return Optional.of(settlement);
         } catch (EmptyResultDataAccessException e) {
@@ -58,7 +58,7 @@ public class SettlementRepository {
                 " join Expense e on s.settlement_id = e.settlement_id" +
                 " join Member m on e.member_id = m.member_id" +
                 " where s.settlement_id = :id";
-        Map<String, Long> param = Map.of("id", id);
+        Map<String, Object> param = Map.of("id", id);
         return template.query(sql, param, memberRowMapper());
     }
 
