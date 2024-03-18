@@ -53,6 +53,21 @@ public class MemberRepository implements CRDRepository<Member> {
         }
     }
 
+    public Optional<Member> login(String user_id, String password) {
+        String sql = "select * from Member where user_id = :user_id";
+        try {
+            Map<String, Object> param = Map.of("user_id", user_id);
+            Member member = template.queryForObject(sql, param, rowMapper());
+            if (member.getUser_pw().equals(password)) {
+                return Optional.of(member);
+            } else {
+                throw new IllegalStateException("Password Incorrect");
+            }
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+    }
+
     @Override
     public List<Member> findAll() {
         String sql = "select * from Member";

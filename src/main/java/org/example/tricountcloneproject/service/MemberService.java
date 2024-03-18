@@ -28,4 +28,8 @@ public class MemberService {
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
+
+    public Member login(String user_id, String user_pw) {
+        return memberRepository.login(user_id, user_pw).get();
+    }
 }
