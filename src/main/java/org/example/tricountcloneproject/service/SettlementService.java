@@ -3,6 +3,7 @@ package org.example.tricountcloneproject.service;
 import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.entity.Member;
 import org.example.tricountcloneproject.entity.Settlement;
+import org.example.tricountcloneproject.entity.SettlementResponse;
 import org.example.tricountcloneproject.repository.SettlementRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,9 @@ public class SettlementService {
 
     public List<Settlement> findAll() {
         return settlementRepository.findAll();
+    }
+
+    public List<SettlementResponse> getBalance(Long settlementId) {
+        return settlementRepository.getBalance(settlementId);
     }
 }

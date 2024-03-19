@@ -3,6 +3,7 @@ package org.example.tricountcloneproject.controller;
 import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.entity.Member;
 import org.example.tricountcloneproject.entity.Settlement;
+import org.example.tricountcloneproject.entity.SettlementResponse;
 import org.example.tricountcloneproject.service.SettlementService;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +45,11 @@ public class SettlementController {
     @GetMapping("/settlement/list")
     public List<Settlement> findAll() {
         return settlementService.findAll();
+    }
+
+    @ResponseBody
+    @GetMapping("/settlement/{id}/balance")
+    public List<SettlementResponse> findBalance(@PathVariable Long id) {
+        return settlementService.getBalance(id);
     }
 }
