@@ -24,7 +24,7 @@ public class ExpenseController {
     }
 
     @ResponseBody
-    @GetMapping("/expense/delete/{expense_id}")
+    @DeleteMapping("/expense/{expense_id}")
     public String delete(@PathVariable Long expense_id) {
         expenseService.delete(expense_id);
         return "expense delete ok";

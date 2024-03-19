@@ -23,7 +23,7 @@ public class SettlementController {
     }
 
     @ResponseBody
-    @GetMapping("/settlement/delete/{id}")
+    @DeleteMapping("/settlement/{id}")
     public String delete(@PathVariable Long id) {
         settlementService.delete(id);
         return "settlement delete ok";
