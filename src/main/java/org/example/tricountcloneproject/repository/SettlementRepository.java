@@ -34,6 +34,10 @@ public class SettlementRepository {
     }
 
     public void delete(Long settlement_id) {
+        String expenseSql = "delete from Expense where settlement_id = :id";
+        Map<String, Object> expenseParam = Map.of("id", settlement_id);
+        template.update(expenseSql, expenseParam);
+
         String sql = "delete from Settlement where settlement_id = :id";
         Map<String, Object> param = Map.of("id", settlement_id);
         template.update(sql, param);
