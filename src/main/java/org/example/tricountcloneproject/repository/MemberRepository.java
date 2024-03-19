@@ -35,6 +35,10 @@ public class MemberRepository {
     }
 
     public void delete(Long id) {
+        String expenseSql = "delete from Expense where member_id = :id";
+        Map<String, Object> expenseParam = Map.of("id", id);
+        template.update(expenseSql, expenseParam);
+
         String sql = "delete from Member where member_id = :id";
         Map<String, Object> param = Map.of("id", id);
         template.update(sql, param);
