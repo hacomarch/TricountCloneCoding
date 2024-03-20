@@ -12,6 +12,7 @@ import org.example.tricountcloneproject.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -27,17 +28,13 @@ public class MemberController {
         try {
             Member loginMember = memberService.login(login.getUserId(), login.getUserPw());
 
-            if (loginMember == null) {
-                return "Unregistered User";
-            }
-
             HttpSession session = request.getSession();
             session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
             session.getAttributeNames()
                     .asIterator()
                     .forEachRemaining(name -> log.info("session name={}, value={}",
                             name, session.getAttribute(name)));
-        } catch (IllegalStateException e) {
+        } catch (IllegalStateException | NoSuchElementException e) {
             return e.getMessage();
         }
         return "Success Login";

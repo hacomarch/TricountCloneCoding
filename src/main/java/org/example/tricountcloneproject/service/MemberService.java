@@ -7,6 +7,7 @@ import org.example.tricountcloneproject.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +24,8 @@ public class MemberService {
     }
 
     public Member findById(Long memberId) {
-        return memberRepository.findById(memberId).get();
+        return memberRepository.findById(memberId)
+                .orElseThrow(() -> new NoSuchElementException("Cannot Find Member by memberId"));
     }
 
     public List<Settlement> findSettlementsById(Long memberId) {
@@ -35,7 +37,8 @@ public class MemberService {
     }
 
     public Member login(String userId, String userPw) {
-        Member member = memberRepository.findByUserId(userId, userPw).get();
+        Member member = memberRepository.findByUserId(userId)
+                .orElseThrow(() -> new NoSuchElementException("Unregistered User"));
 
         if (member.getUserPw().equals(userPw)) {
             return member;

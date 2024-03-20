@@ -10,10 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +27,8 @@ public class SettlementService {
     }
 
     public Settlement findById(Long settlementId) {
-        return settlementRepository.findById(settlementId).get();
+        return settlementRepository.findById(settlementId)
+                .orElseThrow(() -> new NoSuchElementException("Cannot Find Settlement By SettlementId"));
     }
 
     public List<Member> findMembersById(Long settlementId) {

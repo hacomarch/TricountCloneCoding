@@ -6,6 +6,7 @@ import org.example.tricountcloneproject.repository.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,8 @@ public class ExpenseService {
     }
 
     public Expense findById(Long expenseId) {
-        return expenseRepository.findById(expenseId).get();
+        return expenseRepository.findById(expenseId)
+                .orElseThrow(() -> new NoSuchElementException("Cannot Find Expense By ExpenseId"));
     }
 
     public List<Expense> findByMemberId(Long memberId) {

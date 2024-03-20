@@ -66,7 +66,7 @@ public class MemberRepository {
         return template.query(sql, Map.of("id", memberId), settlementRowMapper());
     }
 
-    public Optional<Member> findByUserId(String userId, String userPw) {
+    public Optional<Member> findByUserId(String userId) {
         String sql = "select * from Member where user_id = :id";
         try {
             return Optional.of(template.queryForObject(sql, Map.of("id", userId), memberRowMapper()));
