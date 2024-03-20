@@ -31,53 +31,49 @@ public class MemberRepository {
     public void save(Member member) {
         SqlParameterSource param = new BeanPropertySqlParameterSource(member);
         Number key = jdbcInsert.executeAndReturnKey(param);
-        member.setMember_id(key.longValue());
+        member.setMemberId(key.longValue());
     }
 
-    public void delete(Long id) {
+    public void delete(Long memberId) {
         String expenseSql = "delete from Expense where member_id = :id";
-        Map<String, Object> expenseParam = Map.of("id", id);
-        template.update(expenseSql, expenseParam);
+        template.update(expenseSql, Map.of("id", memberId));
 
-        String sql = "delete from Member where member_id = :id";
-        Map<String, Object> param = Map.of("id", id);
-        template.update(sql, param);
+        String memberSql = "delete from Member where member_id = :id";
+        template.update(memberSql, Map.of("id", memberId));
     }
 
-    public Optional<Member> findById(Long id) {
+    public Optional<Member> findById(Long memberId) {
         String sql = "select * from Member where member_id=:id";
         try {
-            Map<String, Object> param = Map.of("id", id);
-            Member member = template.queryForObject(sql, param, rowMapper());
-            return Optional.of(member);
+            return Optional.of(template.queryForObject(sql, Map.of("id", memberId), rowMapper()));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
 
+    public String findNicknameById(Long memberId) {
+        String sql = "select nickname from Member where member_id = :id";
+        return template.queryForObject(sql, Map.of("id", memberId), String.class);
+    }
+
     //멤버 1명이 갖고 있는 정산 가져오기
-    public List<Settlement> findSettlementListById(Long id) {
+    public List<Settlement> findSettlementsById(Long memberId) {
         String sql = "select distinct s.settlement_id, s.name" +
                 " from Member m" +
                 " join Expense e on m.member_id = e.member_id" +
                 " join Settlement s on e.settlement_id = s.settlement_id" +
                 " where m.member_id = :id";
-        Map<String, Object> param = Map.of("id", id);
-        return template.query(sql, param, settlementRowMapper());
+        return template.query(sql, Map.of("id", memberId), settlementRowMapper());
     }
 
-    public Optional<Member> authenticate(String user_id, String password) {
-        String sql = "select * from Member where user_id = :user_id";
-        try {
-            Map<String, Object> param = Map.of("user_id", user_id);
-            Member member = template.queryForObject(sql, param, rowMapper());
-            if (member.getUser_pw().equals(password)) {
-                return Optional.of(member);
-            } else {
-                throw new IllegalStateException("Password Incorrect");
-            }
-        } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
+    public Member authenticate(String userId, String userPw) {
+        String sql = "select * from Member where user_id = :id";
+        Member member = template.queryForObject(sql, Map.of("id", userId), rowMapper());
+
+        if (member.getUserPw().equals(userPw)) {
+            return member;
+        } else {
+            throw new IllegalStateException("Password Incorrect");
         }
     }
 

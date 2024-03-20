@@ -15,50 +15,50 @@ public class ExpenseController {
     private final ExpenseService expenseService;
 
     @ResponseBody
-    @PostMapping("/{settlement_id}/expense/save")
+    @PostMapping("/settlement/{settlementId}/expense/add")
     public String save(@SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
                        Member loginMember,
-                       @PathVariable Long settlement_id, @RequestBody Expense expense) {
-        expenseService.insert(loginMember.getMember_id(), settlement_id, expense);
+                       @PathVariable Long settlementId, @RequestBody Expense expense) {
+        expenseService.insert(loginMember.getMemberId(), settlementId, expense);
         return "expense save ok";
     }
 
     @ResponseBody
-    @DeleteMapping("/expense/{expense_id}")
-    public String delete(@PathVariable Long expense_id) {
-        expenseService.delete(expense_id);
+    @DeleteMapping("/expense/{expenseId}")
+    public String delete(@PathVariable Long expenseId) {
+        expenseService.delete(expenseId);
         return "expense delete ok";
     }
 
     @ResponseBody
-    @GetMapping("/expense/{expense_id}")
-    public Expense findById(@PathVariable Long expense_id) {
-        return expenseService.findById(expense_id);
+    @GetMapping("/expense/{expenseId}")
+    public Expense findById(@PathVariable Long expenseId) {
+        return expenseService.findById(expenseId);
     }
 
     @ResponseBody
-    @GetMapping("/member/expenseList")
-    public List<Expense> findByMemberId(
+    @GetMapping("/member/expenses")
+    public List<Expense> findExpensesByMemberId(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
             Member loginMember) {
-        return expenseService.findByMemberId(loginMember.getMember_id());
+        return expenseService.findByMemberId(loginMember.getMemberId());
     }
 
     @ResponseBody
-    @GetMapping("/settlement/{settlement_id}/expenseList")
-    public Object findBySettlementId(
+    @GetMapping("/settlement/{settlementId}/expenses")
+    public Object findExpensesBySettlementId(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
             Member loginMember,
-            @PathVariable Long settlement_id) {
+            @PathVariable Long settlementId) {
         try {
-            return expenseService.findBySettlementId(settlement_id, loginMember.getMember_id());
+            return expenseService.findBySettlementId(settlementId, loginMember.getMemberId());
         } catch (IllegalStateException e) {
             return e.getMessage();
         }
     }
 
     @ResponseBody
-    @GetMapping("/expense/list")
+    @GetMapping("/expenses")
     public List<Expense> findAll() {
         return expenseService.findAll();
     }

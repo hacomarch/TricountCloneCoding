@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Member {
-    private Long member_id;
-    private String user_id;
-    private String user_pw;
+    private Long memberId;
+    private String userId;
+    private String userPw;
     private String nickname;
 }

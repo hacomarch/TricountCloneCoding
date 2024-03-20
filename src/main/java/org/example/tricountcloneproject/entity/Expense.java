@@ -7,10 +7,10 @@ import java.time.LocalDate;
 
 @Data
 public class Expense {
-    private Long expense_id;
-    private Long member_id;
-    private Long settlement_id;
+    private Long expenseId;
+    private Long memberId;
+    private Long settlementId;
     private String name;
     private BigDecimal amount;
-    private LocalDate expense_date;
+    private LocalDate expenseDate;
 }

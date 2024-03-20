@@ -18,23 +18,23 @@ public class MemberService {
         memberRepository.save(member);
     }
 
-    public void delete(Long id) {
-        memberRepository.delete(id);
+    public void delete(Long memberId) {
+        memberRepository.delete(memberId);
     }
 
-    public Member findById(Long id) {
-        return memberRepository.findById(id).get();
+    public Member findById(Long memberId) {
+        return memberRepository.findById(memberId).get();
     }
 
-    public List<Settlement> findSettlementsById(Long id) {
-        return memberRepository.findSettlementListById(id);
+    public List<Settlement> findSettlementsById(Long memberId) {
+        return memberRepository.findSettlementsById(memberId);
     }
 
     public List<Member> findAll() {
         return memberRepository.findAll();
     }
 
-    public Member login(String user_id, String user_pw) {
-        return memberRepository.authenticate(user_id, user_pw).get();
+    public Member login(String userId, String userPw) {
+        return memberRepository.authenticate(userId, userPw);
     }
 }

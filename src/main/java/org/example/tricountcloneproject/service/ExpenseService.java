@@ -12,24 +12,24 @@ import java.util.List;
 public class ExpenseService {
     private final ExpenseRepository expenseRepository;
 
-    public void insert(Long member_id, Long settlement_id, Expense expense) {
-        expenseRepository.save(member_id, settlement_id, expense);
+    public void insert(Long memberId, Long settlementId, Expense expense) {
+        expenseRepository.save(memberId, settlementId, expense);
     }
 
-    public void delete(Long id) {
-        expenseRepository.delete(id);
+    public void delete(Long expenseId) {
+        expenseRepository.delete(expenseId);
     }
 
-    public Expense findById(Long id) {
-        return expenseRepository.findById(id).get();
+    public Expense findById(Long expenseId) {
+        return expenseRepository.findById(expenseId).get();
     }
 
-    public List<Expense> findByMemberId(Long id) {
-        return expenseRepository.findByMemberId(id);
+    public List<Expense> findByMemberId(Long memberId) {
+        return expenseRepository.findByMemberId(memberId);
     }
 
-    public List<Expense> findBySettlementId(Long id, Long member_id) {
-        return expenseRepository.findBySettlementId(id, member_id);
+    public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
+        return expenseRepository.findBySettlementId(settlementId, memberId);
     }
 
     public List<Expense> findAll() {

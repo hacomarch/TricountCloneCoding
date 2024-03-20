@@ -16,6 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/member")
 public class MemberController {
 
     private final MemberService memberService;
@@ -24,7 +25,7 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@RequestBody Login login, HttpServletRequest request) {
         try {
-            Member loginMember = memberService.login(login.getUser_id(), login.getUser_pw());
+            Member loginMember = memberService.login(login.getUserId(), login.getUserPw());
 
             if (loginMember == null) {
                 return "Unregistered User";
@@ -32,10 +33,10 @@ public class MemberController {
 
             HttpSession session = request.getSession();
             session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
-            session.getAttributeNames().asIterator()
-                    .forEachRemaining(name ->
-                            log.info("session name={}, value={}", name, session.getAttribute(name)));
-
+            session.getAttributeNames()
+                    .asIterator()
+                    .forEachRemaining(name -> log.info("session name={}, value={}",
+                            name, session.getAttribute(name)));
         } catch (IllegalStateException e) {
             return e.getMessage();
         }
@@ -54,33 +55,33 @@ public class MemberController {
     }
 
     @ResponseBody
-    @PostMapping("/member/save")
+    @PostMapping("/join")
     public String save(@RequestBody Member member) {
         memberService.insert(member);
         return "member save ok";
     }
 
     @ResponseBody
-    @DeleteMapping("/member/{id}")
-    public String delete(@PathVariable Long id) {
-        memberService.delete(id);
+    @DeleteMapping("/{memberId}")
+    public String delete(@PathVariable Long memberId) {
+        memberService.delete(memberId);
         return "member delete ok";
     }
 
     @ResponseBody
-    @GetMapping("/member/{id}")
-    public Member findById(@PathVariable Long id) {
-        return memberService.findById(id);
+    @GetMapping("/{memberId}")
+    public Member findById(@PathVariable Long memberId) {
+        return memberService.findById(memberId);
     }
 
     @ResponseBody
-    @GetMapping("/member/{id}/settlements")
-    public List<Settlement> findSettlementsById(@PathVariable Long id) {
-        return memberService.findSettlementsById(id);
+    @GetMapping("/{memberId}/settlements")
+    public List<Settlement> findSettlementsById(@PathVariable Long memberId) {
+        return memberService.findSettlementsById(memberId);
     }
 
     @ResponseBody
-    @GetMapping("/member/list")
+    @GetMapping
     public List<Member> findAll() {
         return memberService.findAll();
     }

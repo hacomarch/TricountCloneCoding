@@ -24,63 +24,57 @@ public class ExpenseRepository {
         this.template = new NamedParameterJdbcTemplate(dataSource);
     }
 
-    public void save(Long member_id, Long settlement_id, Expense expense) {
+    public void save(Long memberId, Long settlementId, Expense expense) {
         String sql = "insert into Expense (member_id, settlement_id, name, amount, expense_date)" +
                 " values (:member_id, :settlement_id, :name, :amount, :expense_date)";
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("member_id", member_id)
-                .addValue("settlement_id", settlement_id)
+                .addValue("member_id", memberId)
+                .addValue("settlement_id", settlementId)
                 .addValue("name", expense.getName())
                 .addValue("amount", expense.getAmount())
-                .addValue("expense_date", expense.getExpense_date());
+                .addValue("expense_date", expense.getExpenseDate());
         template.update(sql, param);
     }
 
-    public void delete(Long id) {
+    public void delete(Long expenseId) {
         String sql = "delete from Expense where expense_id = :id";
-        Map<String, Object> param = Map.of("id", id);
-        template.update(sql, param);
+        template.update(sql, Map.of("id", expenseId));
     }
 
-    public Optional<Expense> findById(Long id) {
+    public Optional<Expense> findById(Long expenseId) {
         String sql = "select * from Expense where expense_id = :id";
         try {
-            Map<String, Object> param = Map.of("id", id);
-            Expense expense = template.queryForObject(sql, param, rowMapper());
-            return Optional.of(expense);
+            return Optional.of(template.queryForObject(sql, Map.of("id", expenseId), expenseRowMapper()));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
 
     //멤버 1명이 갖고 있는 지출 가져오기
-    public List<Expense> findByMemberId(Long id) {
+    public List<Expense> findByMemberId(Long memberId) {
         String sql = "select * from Expense where member_id = :id";
-        Map<String, Object> param = Map.of("id", id);
-        return template.query(sql, param, rowMapper());
+        return template.query(sql, Map.of("id", memberId), expenseRowMapper());
     }
 
     //정산 1개가 갖고 있는 지출 가져오기
     //정산에 참여한 참가자만 지출 내역을 볼 수 있다.
-    public List<Expense> findBySettlementId(Long settlement_id, Long member_id) {
+    public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
         String sql = "select * from Expense where settlement_id = :id";
-        Map<String, Object> param = Map.of("id", settlement_id);
-        List<Expense> expenses = template.query(sql, param, rowMapper());
+        List<Expense> expenses = template.query(sql, Map.of("id", settlementId), expenseRowMapper());
         boolean match = expenses.stream()
-                .anyMatch(expense -> expense.getMember_id().equals(member_id));
+                .anyMatch(expense -> expense.getMemberId().equals(memberId));
         if (!match) {
             throw new IllegalStateException("Only participants involved in the settlement can view expenses.");
         }
-
         return expenses;
     }
 
     public List<Expense> findAll() {
         String sql = "select * from Expense";
-        return template.query(sql, rowMapper());
+        return template.query(sql, expenseRowMapper());
     }
 
-    public RowMapper<Expense> rowMapper() {
+    public RowMapper<Expense> expenseRowMapper() {
         return BeanPropertyRowMapper.newInstance(Expense.class);
     }
 }

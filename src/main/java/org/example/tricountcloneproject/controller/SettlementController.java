@@ -11,45 +11,46 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/settlement")
 public class SettlementController {
 
     private final SettlementService settlementService;
 
     @ResponseBody
-    @PostMapping("/settlement/save")
+    @PostMapping("/save")
     public String save(@RequestBody Settlement settlement) {
         settlementService.insert(settlement);
         return "settlement save ok";
     }
 
     @ResponseBody
-    @DeleteMapping("/settlement/{id}")
-    public String delete(@PathVariable Long id) {
-        settlementService.delete(id);
+    @DeleteMapping("/{settlementId}")
+    public String delete(@PathVariable Long settlementId) {
+        settlementService.delete(settlementId);
         return "settlement delete ok";
     }
 
     @ResponseBody
-    @GetMapping("/settlement/{id}")
-    public Settlement findById(@PathVariable Long id) {
-        return settlementService.findById(id);
+    @GetMapping("/{settlementId}")
+    public Settlement findById(@PathVariable Long settlementId) {
+        return settlementService.findById(settlementId);
     }
 
     @ResponseBody
-    @GetMapping("/settlement/{id}/members")
-    public List<Member> findMembersById(@PathVariable Long id) {
-        return settlementService.findMembersById(id);
+    @GetMapping("/{settlementId}/members")
+    public List<Member> findMembersById(@PathVariable Long settlementId) {
+        return settlementService.findMembersById(settlementId);
     }
 
     @ResponseBody
-    @GetMapping("/settlement/list")
+    @GetMapping
     public List<Settlement> findAll() {
         return settlementService.findAll();
     }
 
     @ResponseBody
-    @GetMapping("/settlement/{id}/balance")
-    public List<SettlementResponse> findBalance(@PathVariable Long id) {
-        return settlementService.getBalance(id);
+    @GetMapping("/{settlementId}/result")
+    public List<SettlementResponse> findResult(@PathVariable Long settlementId) {
+        return settlementService.getSettlementResponses(settlementId);
     }
 }
