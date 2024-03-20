@@ -1,9 +1,8 @@
 package org.example.tricountcloneproject.service;
 
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.repository.MemberRepository;
+import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.member.MemberService;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

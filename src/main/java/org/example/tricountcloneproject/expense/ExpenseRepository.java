@@ -1,7 +1,7 @@
-package org.example.tricountcloneproject.repository;
+package org.example.tricountcloneproject.expense;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.tricountcloneproject.entity.Expense;
+import org.example.tricountcloneproject.expense.Expense;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;

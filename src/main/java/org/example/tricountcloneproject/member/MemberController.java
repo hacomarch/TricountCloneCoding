@@ -1,14 +1,10 @@
-package org.example.tricountcloneproject.controller;
+package org.example.tricountcloneproject.member;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.tricountcloneproject.entity.Login;
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.entity.SessionConst;
-import org.example.tricountcloneproject.entity.Settlement;
-import org.example.tricountcloneproject.service.MemberService;
+import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

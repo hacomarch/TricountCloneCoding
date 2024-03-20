@@ -1,10 +1,8 @@
-package org.example.tricountcloneproject.controller;
+package org.example.tricountcloneproject.expense;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.entity.Expense;
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.entity.SessionConst;
-import org.example.tricountcloneproject.service.ExpenseService;
+import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.member.SessionConst;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

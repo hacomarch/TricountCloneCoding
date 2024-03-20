@@ -1,8 +1,8 @@
-package org.example.tricountcloneproject.service;
+package org.example.tricountcloneproject.expense;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.entity.Expense;
-import org.example.tricountcloneproject.repository.ExpenseRepository;
+import org.example.tricountcloneproject.expense.Expense;
+import org.example.tricountcloneproject.expense.ExpenseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

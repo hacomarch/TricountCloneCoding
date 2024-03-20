@@ -1,8 +1,11 @@
 package org.example.tricountcloneproject.service;
 
-import org.example.tricountcloneproject.entity.Expense;
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.entity.Settlement;
+import org.example.tricountcloneproject.expense.Expense;
+import org.example.tricountcloneproject.expense.ExpenseService;
+import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.member.MemberService;
+import org.example.tricountcloneproject.settlement.Settlement;
+import org.example.tricountcloneproject.settlement.SettlementService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

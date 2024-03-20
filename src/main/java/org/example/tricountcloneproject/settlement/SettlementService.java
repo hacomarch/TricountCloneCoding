@@ -1,11 +1,11 @@
-package org.example.tricountcloneproject.service;
+package org.example.tricountcloneproject.settlement;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.entity.Settlement;
-import org.example.tricountcloneproject.entity.SettlementResponse;
-import org.example.tricountcloneproject.repository.MemberRepository;
-import org.example.tricountcloneproject.repository.SettlementRepository;
+import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.settlement.Settlement;
+import org.example.tricountcloneproject.settlement.SettlementResponse;
+import org.example.tricountcloneproject.member.MemberRepository;
+import org.example.tricountcloneproject.settlement.SettlementRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

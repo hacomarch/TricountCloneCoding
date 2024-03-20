@@ -1,4 +1,4 @@
-package org.example.tricountcloneproject.entity;
+package org.example.tricountcloneproject.settlement;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

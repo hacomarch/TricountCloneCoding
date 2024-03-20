@@ -1,6 +1,7 @@
 package org.example.tricountcloneproject.service;
 
-import org.example.tricountcloneproject.entity.Settlement;
+import org.example.tricountcloneproject.settlement.Settlement;
+import org.example.tricountcloneproject.settlement.SettlementService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

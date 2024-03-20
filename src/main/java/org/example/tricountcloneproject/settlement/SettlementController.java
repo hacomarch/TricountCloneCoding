@@ -1,10 +1,7 @@
-package org.example.tricountcloneproject.controller;
+package org.example.tricountcloneproject.settlement;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.entity.Settlement;
-import org.example.tricountcloneproject.entity.SettlementResponse;
-import org.example.tricountcloneproject.service.SettlementService;
+import org.example.tricountcloneproject.member.Member;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.example.tricountcloneproject.entity;
+package org.example.tricountcloneproject.expense;
 
 import lombok.Data;
 

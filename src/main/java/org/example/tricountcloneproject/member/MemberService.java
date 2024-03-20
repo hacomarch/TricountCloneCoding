@@ -1,9 +1,9 @@
-package org.example.tricountcloneproject.service;
+package org.example.tricountcloneproject.member;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.entity.Member;
-import org.example.tricountcloneproject.entity.Settlement;
-import org.example.tricountcloneproject.repository.MemberRepository;
+import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.settlement.Settlement;
+import org.example.tricountcloneproject.member.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
