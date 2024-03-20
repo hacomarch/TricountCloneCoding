@@ -45,7 +45,7 @@ public class MemberRepository {
     public Optional<Member> findById(Long memberId) {
         String sql = "select * from Member where member_id=:id";
         try {
-            return Optional.of(template.queryForObject(sql, Map.of("id", memberId), rowMapper()));
+            return Optional.of(template.queryForObject(sql, Map.of("id", memberId), memberRowMapper()));
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
@@ -68,7 +68,7 @@ public class MemberRepository {
 
     public Member authenticate(String userId, String userPw) {
         String sql = "select * from Member where user_id = :id";
-        Member member = template.queryForObject(sql, Map.of("id", userId), rowMapper());
+        Member member = template.queryForObject(sql, Map.of("id", userId), memberRowMapper());
 
         if (member.getUserPw().equals(userPw)) {
             return member;
@@ -82,7 +82,7 @@ public class MemberRepository {
         return template.query(sql, rowMapper());
     }
 
-    public RowMapper<Member> rowMapper() {
+    public RowMapper<Member> memberRowMapper() {
         return BeanPropertyRowMapper.newInstance(Member.class);
     }
 
