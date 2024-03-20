@@ -35,6 +35,12 @@ public class MemberService {
     }
 
     public Member login(String userId, String userPw) {
-        return memberRepository.authenticate(userId, userPw);
+        Member member = memberRepository.findByUserId(userId, userPw).get();
+
+        if (member.getUserPw().equals(userPw)) {
+            return member;
+        } else {
+            throw new IllegalStateException("Password Incorrect");
+        }
     }
 }

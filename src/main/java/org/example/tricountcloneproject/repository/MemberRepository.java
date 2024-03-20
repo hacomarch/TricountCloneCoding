@@ -66,20 +66,18 @@ public class MemberRepository {
         return template.query(sql, Map.of("id", memberId), settlementRowMapper());
     }
 
-    public Member authenticate(String userId, String userPw) {
+    public Optional<Member> findByUserId(String userId, String userPw) {
         String sql = "select * from Member where user_id = :id";
-        Member member = template.queryForObject(sql, Map.of("id", userId), memberRowMapper());
-
-        if (member.getUserPw().equals(userPw)) {
-            return member;
-        } else {
-            throw new IllegalStateException("Password Incorrect");
+        try {
+            return Optional.of(template.queryForObject(sql, Map.of("id", userId), memberRowMapper()));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
         }
     }
 
     public List<Member> findAll() {
         String sql = "select * from Member";
-        return template.query(sql, rowMapper());
+        return template.query(sql, memberRowMapper());
     }
 
     public RowMapper<Member> memberRowMapper() {

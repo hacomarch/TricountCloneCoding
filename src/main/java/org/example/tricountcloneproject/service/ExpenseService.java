@@ -29,7 +29,13 @@ public class ExpenseService {
     }
 
     public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
-        return expenseRepository.findBySettlementId(settlementId, memberId);
+        List<Expense> expenses = expenseRepository.findBySettlementId(settlementId, memberId);
+        boolean match = expenses.stream()
+                .anyMatch(expense -> expense.getMemberId().equals(memberId));
+        if (!match) {
+            throw new IllegalStateException("Only participants involved in the settlement can view expenses.");
+        }
+        return expenses;
     }
 
     public List<Expense> findAll() {

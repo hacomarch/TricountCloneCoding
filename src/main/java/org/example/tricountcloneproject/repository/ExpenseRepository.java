@@ -60,13 +60,7 @@ public class ExpenseRepository {
     //정산에 참여한 참가자만 지출 내역을 볼 수 있다.
     public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
         String sql = "select * from Expense where settlement_id = :id";
-        List<Expense> expenses = template.query(sql, Map.of("id", settlementId), expenseRowMapper());
-        boolean match = expenses.stream()
-                .anyMatch(expense -> expense.getMemberId().equals(memberId));
-        if (!match) {
-            throw new IllegalStateException("Only participants involved in the settlement can view expenses.");
-        }
-        return expenses;
+        return template.query(sql, Map.of("id", settlementId), expenseRowMapper());
     }
 
     public List<Expense> findAll() {
