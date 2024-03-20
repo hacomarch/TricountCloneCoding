@@ -53,7 +53,7 @@ class SettlementServiceTest {
     void findById() {
         Settlement findSettlement = settlementService.findById(1L);
 
-        assertEquals(1L, findSettlement.getSettlement_id());
+        assertEquals(1L, findSettlement.getSettlementId());
         assertEquals("강릉 여행 정산", findSettlement.getName());
     }
 

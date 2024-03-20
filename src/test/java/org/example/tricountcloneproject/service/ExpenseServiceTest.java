@@ -32,7 +32,7 @@ class ExpenseServiceTest {
         Expense expense = new Expense();
         expense.setName("산낙지");
         expense.setAmount(BigDecimal.valueOf(30000));
-        expense.setExpense_date(LocalDate.now());
+        expense.setExpenseDate(LocalDate.now());
         expenseService.insert(1L, 3L, expense);
 
         assertEquals(listSize + 1, expenseService.findAll().size());
@@ -53,22 +53,22 @@ class ExpenseServiceTest {
     void findById() {
         Expense findExpense = expenseService.findById(1L);
 
-        assertEquals(1L, findExpense.getExpense_id());
-        assertEquals(1L, findExpense.getMember_id());
-        assertEquals(1L, findExpense.getSettlement_id());
+        assertEquals(1L, findExpense.getExpenseId());
+        assertEquals(1L, findExpense.getMemberId());
+        assertEquals(1L, findExpense.getSettlementId());
         assertEquals("숙소", findExpense.getName());
         assertEquals(String.valueOf(150000.0), findExpense.getAmount().toString());
-        assertEquals(LocalDate.of(2024, 3, 5), findExpense.getExpense_date());
+        assertEquals(LocalDate.of(2024, 3, 5), findExpense.getExpenseDate());
     }
 
     @Test
     @DisplayName("FindByMemberId")
     void findByMemberId() {
         Member member = memberService.findById(1L);
-        List<Expense> findExpenseByMemberId = expenseService.findByMemberId(member.getMember_id());
+        List<Expense> findExpenseByMemberId = expenseService.findByMemberId(member.getMemberId());
         findExpenseByMemberId.stream()
-                .map(Expense::getMember_id)
-                .forEach(memberId -> assertEquals(member.getMember_id(), memberId));
+                .map(Expense::getMemberId)
+                .forEach(memberId -> assertEquals(member.getMemberId(), memberId));
     }
 
     @Test
@@ -76,10 +76,10 @@ class ExpenseServiceTest {
     void findBySettlementId() {
         Settlement settlement = settlementService.findById(1L);
         List<Expense> findExpenseBySettlementId =
-                expenseService.findBySettlementId(settlement.getSettlement_id(), 1L);
+                expenseService.findBySettlementId(settlement.getSettlementId(), 1L);
         findExpenseBySettlementId.stream()
-                .map(Expense::getSettlement_id)
-                .forEach(settlement_id -> assertEquals(settlement.getSettlement_id(), settlement_id));
+                .map(Expense::getSettlementId)
+                .forEach(settlement_id -> assertEquals(settlement.getSettlementId(), settlement_id));
     }
 
     @Test

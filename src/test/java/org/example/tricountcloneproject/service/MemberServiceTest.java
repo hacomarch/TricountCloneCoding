@@ -24,18 +24,18 @@ class MemberServiceTest {
     @BeforeAll
     static void init() {
         member1 = new Member();
-        member1.setUser_id("admin");
-        member1.setUser_pw("1212");
+        member1.setUserId("admin");
+        member1.setUserPw("1212");
         member1.setNickname("mum");
 
         member2 = new Member();
-        member2.setUser_id("haco");
-        member2.setUser_pw("11222");
+        member2.setUserId("haco");
+        member2.setUserPw("11222");
         member2.setNickname("ahahah");
 
         member3 = new Member();
-        member3.setUser_id("sungtae");
-        member3.setUser_pw("0124");
+        member3.setUserId("sungtae");
+        member3.setUserPw("0124");
         member3.setNickname("vivi");
     }
 
@@ -68,9 +68,9 @@ class MemberServiceTest {
     void findById() {
         Member findMember = memberService.findById(1L);
 
-        assertEquals(1L, findMember.getMember_id());
-        assertEquals("admin", findMember.getUser_id());
-        assertEquals("1212", findMember.getUser_pw());
+        assertEquals(1L, findMember.getMemberId());
+        assertEquals("admin", findMember.getUserId());
+        assertEquals("1212", findMember.getUserPw());
         assertEquals("mum", findMember.getNickname());
     }
 
