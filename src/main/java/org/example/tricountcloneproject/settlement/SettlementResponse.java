@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class SettlementResponse {
     private Long senderUserNo;
     private String senderUserName;
