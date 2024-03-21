@@ -6,7 +6,7 @@ import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.member.MemberRepository;
 import org.example.tricountcloneproject.response.MemberResponse;
-import org.example.tricountcloneproject.response.SettlementResponse;
+import org.example.tricountcloneproject.response.SettlementResultResponse;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -50,7 +50,7 @@ public class SettlementService {
         return settlementRepository.findAll();
     }
 
-    public List<SettlementResponse> getSettlementResponses(Long settlementId) {
+    public List<SettlementResultResponse> getSettlementResponses(Long settlementId) {
         //멤버 1명이 얼마씩 내야 하는지
         BigDecimal balanceAmount = calculateBalanceAmount(settlementId);
 
@@ -72,9 +72,9 @@ public class SettlementService {
         return map.values().stream().allMatch(amount -> amount.compareTo(first) == 0);
     }
 
-    private List<SettlementResponse> generateSettlementResponses(BigDecimal balanceAmount,
-                                                                 Map<Long, BigDecimal> expensesByMember) {
-        List<SettlementResponse> responses = new ArrayList<>();
+    private List<SettlementResultResponse> generateSettlementResponses(BigDecimal balanceAmount,
+                                                                       Map<Long, BigDecimal> expensesByMember) {
+        List<SettlementResultResponse> responses = new ArrayList<>();
 
         expensesByMember.forEach((memberId, totalSpent) -> {
             if (balanceAmount.compareTo(totalSpent) > 0) { //정산 금액 > 총 지출 금액 == 더 내야 할 경우
@@ -88,7 +88,7 @@ public class SettlementService {
     private void adjustMemberSettlements(Long senderId,
                                          BigDecimal senderTotalExpense, BigDecimal balanceAmount,
                                          Map<Long, BigDecimal> expensesByMember,
-                                         List<SettlementResponse> responses) {
+                                         List<SettlementResultResponse> responses) {
 
         for (Map.Entry<Long, BigDecimal> entry : expensesByMember.entrySet()) {
             // 보낼 금액이 정산 금액과 같아지면 다 보냈다는 것과 같으니 끝.
@@ -115,8 +115,8 @@ public class SettlementService {
         }
     }
 
-    private SettlementResponse createSettlement(Long senderId, BigDecimal sendAmount, Long receiverId) {
-        return new SettlementResponse(
+    private SettlementResultResponse createSettlement(Long senderId, BigDecimal sendAmount, Long receiverId) {
+        return new SettlementResultResponse(
                 senderId, memberRepository.findNicknameById(senderId),
                 sendAmount.intValue(),
                 receiverId, memberRepository.findNicknameById(receiverId)

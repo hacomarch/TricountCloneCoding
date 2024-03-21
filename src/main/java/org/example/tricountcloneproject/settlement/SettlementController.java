@@ -5,7 +5,7 @@ import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.SessionConst;
 import org.example.tricountcloneproject.response.MemberResponse;
-import org.example.tricountcloneproject.response.SettlementResponse;
+import org.example.tricountcloneproject.response.SettlementResultResponse;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,7 +64,7 @@ public class SettlementController {
 
     @ResponseBody
     @GetMapping("/{settlementId}/result")
-    public List<SettlementResponse> findResult(@PathVariable Long settlementId) {
+    public List<SettlementResultResponse> findResult(@PathVariable Long settlementId) {
         return settlementService.getSettlementResponses(settlementId);
     }
 }
