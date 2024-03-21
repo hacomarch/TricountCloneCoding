@@ -35,7 +35,7 @@ public class ExpenseController {
     }
 
     @ResponseBody
-    @GetMapping("/expenses")
+    @GetMapping("/expense")
     public List<Expense> findAll() {
         return expenseService.findAll();
     }
