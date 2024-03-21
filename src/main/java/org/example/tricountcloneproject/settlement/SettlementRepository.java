@@ -98,7 +98,7 @@ public class SettlementRepository {
     }
 
     //정산이 갖고 있는 지출 금액 리스트 가져오기
-    public List<BigDecimal> getExpensesBy(Long settlementId) {
+    public List<BigDecimal> getExpensesById(Long settlementId) {
         String sql = "select amount from Expense where settlement_id = :id";
         return template.queryForList(sql, Map.of("id", settlementId), BigDecimal.class);
     }

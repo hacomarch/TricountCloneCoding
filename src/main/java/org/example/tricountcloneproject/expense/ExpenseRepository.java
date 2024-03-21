@@ -57,7 +57,6 @@ public class ExpenseRepository {
     }
 
     //정산 1개가 갖고 있는 지출 가져오기
-    //정산에 참여한 참가자만 지출 내역을 볼 수 있다.
     public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
         String sql = "select * from Expense where settlement_id = :id";
         return template.query(sql, Map.of("id", settlementId), expenseRowMapper());

@@ -1,11 +1,9 @@
 package org.example.tricountcloneproject.settlement;
 
 import lombok.RequiredArgsConstructor;
+import org.example.tricountcloneproject.exception.EntityNotFoundException;
 import org.example.tricountcloneproject.member.Member;
-import org.example.tricountcloneproject.settlement.Settlement;
-import org.example.tricountcloneproject.settlement.SettlementResponse;
 import org.example.tricountcloneproject.member.MemberRepository;
-import org.example.tricountcloneproject.settlement.SettlementRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -28,7 +26,7 @@ public class SettlementService {
 
     public Settlement findById(Long settlementId) {
         return settlementRepository.findById(settlementId)
-                .orElseThrow(() -> new NoSuchElementException("Cannot Find Settlement By SettlementId"));
+                .orElseThrow(() -> new EntityNotFoundException("Settlement"));
     }
 
     public List<Member> findMembersById(Long settlementId) {
@@ -40,10 +38,14 @@ public class SettlementService {
     }
 
     public List<SettlementResponse> getSettlementResponses(Long settlementId) {
-        BigDecimal balanceAmount = calculateBalanceAmount(settlementId); //멤버 1명이 얼마씩 내야 하는지
-        Map<Long, BigDecimal> totalExpensesByMember =
-                settlementRepository.getTotalAmountByMember(settlementId); //멤버별 정산에서 총 지출한 금액 맵 (memberId, 총 지출 금액)
+        //멤버 1명이 얼마씩 내야 하는지
+        BigDecimal balanceAmount = calculateBalanceAmount(settlementId);
 
+        //멤버별 정산에서 총 지출한 금액 맵 (memberId, 총 지출 금액)
+        Map<Long, BigDecimal> totalExpensesByMember =
+                settlementRepository.getTotalAmountByMember(settlementId);
+
+        //모두 같은 금액을 지출했다면, 빈 리스트 반환
         if (allMembersExpenseSameAmount(totalExpensesByMember)) {
             return Collections.emptyList();
         }
@@ -82,9 +84,11 @@ public class SettlementService {
             Long receiverId = entry.getKey();
             BigDecimal receiverTotalExpense = entry.getValue();
 
-            // 지출한 금액 > 정산 금액 == 받아야 하는 멤버를 찾았으면
+            // 지출한 금액 > 정산 금액 == 받아야 하는 멤버
             if (entry.getValue().compareTo(balanceAmount) > 0) {
+                //보낼 수 있는 금액
                 BigDecimal amountNeededToSend = balanceAmount.subtract(senderTotalExpense);
+                //받을 수 있는 금액
                 BigDecimal amountNeededToReceive = balanceAmount.subtract(receiverTotalExpense).abs();
 
                 //송금자가 보내야 하는 금액과 받는 사람이 받아야 하는 금액 중 작은 금액을 결정해서 송금 금액으로 저장
@@ -114,7 +118,7 @@ public class SettlementService {
 
     //정산에서 발생한 총 지출 금액 계산하기
     private BigDecimal totalExpenseAmount(Long settlementId) {
-        List<BigDecimal> expenses = settlementRepository.getExpensesBy(settlementId);
+        List<BigDecimal> expenses = settlementRepository.getExpensesById(settlementId);
         return expenses.stream()
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .setScale(0, RoundingMode.HALF_UP);

@@ -1,13 +1,13 @@
 package org.example.tricountcloneproject.member;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.exception.IncorrectPasswordException;
+import org.example.tricountcloneproject.exception.EntityNotFoundException;
+import org.example.tricountcloneproject.exception.UserNotFoundException;
 import org.example.tricountcloneproject.settlement.Settlement;
-import org.example.tricountcloneproject.member.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class MemberService {
 
     public Member findById(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() -> new NoSuchElementException("Cannot Find Member by memberId"));
+                .orElseThrow(() -> new EntityNotFoundException("Member"));
     }
 
     public List<Settlement> findSettlementsById(Long memberId) {
@@ -38,12 +38,12 @@ public class MemberService {
 
     public Member login(String userId, String userPw) {
         Member member = memberRepository.findByUserId(userId)
-                .orElseThrow(() -> new NoSuchElementException("Unregistered User"));
+                .orElseThrow(UserNotFoundException::new);
 
         if (member.getUserPw().equals(userPw)) {
             return member;
         } else {
-            throw new IllegalStateException("Password Incorrect");
+            throw new IncorrectPasswordException();
         }
     }
 }

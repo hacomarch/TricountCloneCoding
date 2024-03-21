@@ -1,6 +1,7 @@
 package org.example.tricountcloneproject.expense;
 
 import lombok.RequiredArgsConstructor;
+import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.SessionConst;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class ExpenseController {
             @PathVariable Long settlementId) {
         try {
             return expenseService.findBySettlementId(settlementId, loginMember.getMemberId());
-        } catch (IllegalStateException e) {
+        } catch (ExpenseAccessDeniedException e) {
             return e.getMessage();
         }
     }

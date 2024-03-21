@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.example.tricountcloneproject.exception.IncorrectPasswordException;
+import org.example.tricountcloneproject.exception.UserNotFoundException;
 import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +32,7 @@ public class MemberController {
                     .asIterator()
                     .forEachRemaining(name -> log.info("session name={}, value={}",
                             name, session.getAttribute(name)));
-        } catch (IllegalStateException | NoSuchElementException e) {
+        } catch (IncorrectPasswordException | UserNotFoundException e) {
             return e.getMessage();
         }
         return "Success Login";
