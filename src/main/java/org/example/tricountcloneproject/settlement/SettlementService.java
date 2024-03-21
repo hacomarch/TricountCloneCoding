@@ -6,6 +6,7 @@ import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.MemberRepository;
+import org.example.tricountcloneproject.settlement.response.SettlementResponse;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
