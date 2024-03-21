@@ -6,11 +6,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.tricountcloneproject.exception.IncorrectPasswordException;
 import org.example.tricountcloneproject.exception.UserNotFoundException;
+import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
@@ -73,6 +73,14 @@ public class MemberController {
     @GetMapping("/{memberId}/settlements")
     public List<Settlement> findSettlementsById(@PathVariable Long memberId) {
         return memberService.findSettlementsById(memberId);
+    }
+
+    @ResponseBody
+    @GetMapping("/expenses")
+    public List<Expense> findExpensesByMemberId(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
+            Member loginMember) {
+        return memberService.findExpensesById(loginMember.getMemberId());
     }
 
     @ResponseBody

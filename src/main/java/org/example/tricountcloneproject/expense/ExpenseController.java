@@ -1,7 +1,6 @@
 package org.example.tricountcloneproject.expense;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.SessionConst;
 import org.springframework.web.bind.annotation.*;
@@ -33,27 +32,6 @@ public class ExpenseController {
     @GetMapping("/expense/{expenseId}")
     public Expense findById(@PathVariable Long expenseId) {
         return expenseService.findById(expenseId);
-    }
-
-    @ResponseBody
-    @GetMapping("/member/expenses")
-    public List<Expense> findExpensesByMemberId(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
-            Member loginMember) {
-        return expenseService.findByMemberId(loginMember.getMemberId());
-    }
-
-    @ResponseBody
-    @GetMapping("/settlement/{settlementId}/expenses")
-    public Object findExpensesBySettlementId(
-            @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
-            Member loginMember,
-            @PathVariable Long settlementId) {
-        try {
-            return expenseService.findBySettlementId(settlementId, loginMember.getMemberId());
-        } catch (ExpenseAccessDeniedException e) {
-            return e.getMessage();
-        }
     }
 
     @ResponseBody

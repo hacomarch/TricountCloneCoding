@@ -1,8 +1,8 @@
 package org.example.tricountcloneproject.settlement;
 
+import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.expense.ExpenseRepository;
 import org.example.tricountcloneproject.member.Member;
-import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -52,9 +52,10 @@ public class SettlementRepository {
         }
     }
 
-    public List<Settlement> findAll() {
-        String sql = "select * from Settlement";
-        return template.query(sql, settlementRowMapper());
+    //정산 1개가 갖고 있는 지출 가져오기
+    public List<Expense> findExpensesById(Long settlementId) {
+        String sql = "select * from Expense where settlement_id = :id";
+        return template.query(sql, Map.of("id", settlementId), expenseRowMapper());
     }
 
     //정산에 참여한 멤버 리스트 가져오기
@@ -65,6 +66,11 @@ public class SettlementRepository {
                 " join Member m on e.member_id = m.member_id" +
                 " where s.settlement_id = :id";
         return template.query(sql, Map.of("id", settlementId), memberRowMapper());
+    }
+
+    public List<Settlement> findAll() {
+        String sql = "select * from Settlement";
+        return template.query(sql, settlementRowMapper());
     }
 
     //정산에서 멤버별로 얼마나 지출했는지 구하는 메서드
@@ -109,5 +115,9 @@ public class SettlementRepository {
 
     public RowMapper<Member> memberRowMapper() {
         return BeanPropertyRowMapper.newInstance(Member.class);
+    }
+
+    public RowMapper<Expense> expenseRowMapper() {
+        return BeanPropertyRowMapper.newInstance(Expense.class);
     }
 }

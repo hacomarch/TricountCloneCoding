@@ -1,6 +1,6 @@
 package org.example.tricountcloneproject.member;
 
-import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -51,11 +51,6 @@ public class MemberRepository {
         }
     }
 
-    public String findNicknameById(Long memberId) {
-        String sql = "select nickname from Member where member_id = :id";
-        return template.queryForObject(sql, Map.of("id", memberId), String.class);
-    }
-
     //멤버 1명이 갖고 있는 정산 가져오기
     public List<Settlement> findSettlementsById(Long memberId) {
         String sql = "select distinct s.settlement_id, s.name" +
@@ -66,6 +61,12 @@ public class MemberRepository {
         return template.query(sql, Map.of("id", memberId), settlementRowMapper());
     }
 
+    //멤버 1명이 갖고 있는 지출 가져오기
+    public List<Expense> findExpensesById(Long memberId) {
+        String sql = "select * from Expense where member_id = :id";
+        return template.query(sql, Map.of("id", memberId), expenseRowMapper());
+    }
+
     public Optional<Member> findByUserId(String userId) {
         String sql = "select * from Member where user_id = :id";
         try {
@@ -73,6 +74,11 @@ public class MemberRepository {
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public String findNicknameById(Long memberId) {
+        String sql = "select nickname from Member where member_id = :id";
+        return template.queryForObject(sql, Map.of("id", memberId), String.class);
     }
 
     public List<Member> findAll() {
@@ -86,5 +92,9 @@ public class MemberRepository {
 
     public RowMapper<Settlement> settlementRowMapper() {
         return BeanPropertyRowMapper.newInstance(Settlement.class);
+    }
+
+    public RowMapper<Expense> expenseRowMapper() {
+        return BeanPropertyRowMapper.newInstance(Expense.class);
     }
 }

@@ -2,6 +2,8 @@ package org.example.tricountcloneproject.settlement;
 
 import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.exception.EntityNotFoundException;
+import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
+import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.MemberRepository;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,16 @@ public class SettlementService {
 
     public List<Member> findMembersById(Long settlementId) {
         return settlementRepository.findMembersById(settlementId);
+    }
+
+    public List<Expense> findExpensesById(Long settlementId, Long memberId) {
+        List<Expense> expenses = settlementRepository.findExpensesById(settlementId);
+        boolean match = expenses.stream()
+                .anyMatch(expense -> expense.getMemberId().equals(memberId));
+        if (!match) {
+            throw new ExpenseAccessDeniedException();
+        }
+        return expenses;
     }
 
     public List<Settlement> findAll() {

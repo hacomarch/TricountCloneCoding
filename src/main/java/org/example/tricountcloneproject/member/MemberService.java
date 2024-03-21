@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.exception.IncorrectPasswordException;
 import org.example.tricountcloneproject.exception.EntityNotFoundException;
 import org.example.tricountcloneproject.exception.UserNotFoundException;
+import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,10 @@ public class MemberService {
 
     public List<Settlement> findSettlementsById(Long memberId) {
         return memberRepository.findSettlementsById(memberId);
+    }
+
+    public List<Expense> findExpensesById(Long memberId) {
+        return memberRepository.findExpensesById(memberId);
     }
 
     public List<Member> findAll() {

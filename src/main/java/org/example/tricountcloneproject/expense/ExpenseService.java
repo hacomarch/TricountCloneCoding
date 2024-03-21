@@ -25,19 +25,7 @@ public class ExpenseService {
                 .orElseThrow(() -> new EntityNotFoundException("Expense"));
     }
 
-    public List<Expense> findByMemberId(Long memberId) {
-        return expenseRepository.findByMemberId(memberId);
-    }
 
-    public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
-        List<Expense> expenses = expenseRepository.findBySettlementId(settlementId, memberId);
-        boolean match = expenses.stream()
-                .anyMatch(expense -> expense.getMemberId().equals(memberId));
-        if (!match) {
-            throw new ExpenseAccessDeniedException();
-        }
-        return expenses;
-    }
 
     public List<Expense> findAll() {
         return expenseRepository.findAll();

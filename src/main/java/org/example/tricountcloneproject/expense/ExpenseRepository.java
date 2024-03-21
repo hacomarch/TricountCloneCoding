@@ -50,17 +50,7 @@ public class ExpenseRepository {
         }
     }
 
-    //멤버 1명이 갖고 있는 지출 가져오기
-    public List<Expense> findByMemberId(Long memberId) {
-        String sql = "select * from Expense where member_id = :id";
-        return template.query(sql, Map.of("id", memberId), expenseRowMapper());
-    }
 
-    //정산 1개가 갖고 있는 지출 가져오기
-    public List<Expense> findBySettlementId(Long settlementId, Long memberId) {
-        String sql = "select * from Expense where settlement_id = :id";
-        return template.query(sql, Map.of("id", settlementId), expenseRowMapper());
-    }
 
     public List<Expense> findAll() {
         String sql = "select * from Expense";
