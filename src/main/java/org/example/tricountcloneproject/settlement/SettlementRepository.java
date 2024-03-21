@@ -3,6 +3,7 @@ package org.example.tricountcloneproject.settlement;
 import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.expense.ExpenseRepository;
 import org.example.tricountcloneproject.member.Member;
+import org.example.tricountcloneproject.response.MemberResponse;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -59,13 +60,13 @@ public class SettlementRepository {
     }
 
     //정산에 참여한 멤버 리스트 가져오기
-    public List<Member> findMembersById(Long settlementId) {
-        String sql = "select distinct m.member_id, m.user_id, m.user_pw, m.nickname" +
+    public List<MemberResponse> findMembersNicknameById(Long settlementId) {
+        String sql = "select distinct m.nickname" +
                 " from Settlement s" +
                 " join Expense e on s.settlement_id = e.settlement_id" +
                 " join Member m on e.member_id = m.member_id" +
                 " where s.settlement_id = :id";
-        return template.query(sql, Map.of("id", settlementId), memberRowMapper());
+        return template.query(sql, Map.of("id", settlementId), memberNicknameRowMapper());
     }
 
     public List<Settlement> findAll() {
@@ -113,8 +114,8 @@ public class SettlementRepository {
         return BeanPropertyRowMapper.newInstance(Settlement.class);
     }
 
-    public RowMapper<Member> memberRowMapper() {
-        return BeanPropertyRowMapper.newInstance(Member.class);
+    public RowMapper<MemberResponse> memberNicknameRowMapper() {
+        return BeanPropertyRowMapper.newInstance(MemberResponse.class);
     }
 
     public RowMapper<Expense> expenseRowMapper() {

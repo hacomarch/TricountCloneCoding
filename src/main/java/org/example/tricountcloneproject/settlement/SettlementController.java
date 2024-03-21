@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.SessionConst;
+import org.example.tricountcloneproject.response.MemberResponse;
 import org.example.tricountcloneproject.response.SettlementResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,7 +39,7 @@ public class SettlementController {
 
     @ResponseBody
     @GetMapping("/{settlementId}/members")
-    public List<Member> findMembersById(@PathVariable Long settlementId) {
+    public List<MemberResponse> findMembersById(@PathVariable Long settlementId) {
         return settlementService.findMembersById(settlementId);
     }
 

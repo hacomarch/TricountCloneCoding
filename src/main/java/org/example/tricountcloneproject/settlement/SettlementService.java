@@ -6,6 +6,7 @@ import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.MemberRepository;
+import org.example.tricountcloneproject.response.MemberResponse;
 import org.example.tricountcloneproject.response.SettlementResponse;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +33,8 @@ public class SettlementService {
                 .orElseThrow(() -> new EntityNotFoundException("Settlement"));
     }
 
-    public List<Member> findMembersById(Long settlementId) {
-        return settlementRepository.findMembersById(settlementId);
+    public List<MemberResponse> findMembersById(Long settlementId) {
+        return settlementRepository.findMembersNicknameById(settlementId);
     }
 
     public List<Expense> findExpensesById(Long settlementId, Long memberId) {
