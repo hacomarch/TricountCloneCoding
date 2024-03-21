@@ -1,4 +1,4 @@
-package org.example.tricountcloneproject.settlement.response;
+package org.example.tricountcloneproject.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
