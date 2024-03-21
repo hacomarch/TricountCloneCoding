@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.tricountcloneproject.exception.IncorrectPasswordException;
 import org.example.tricountcloneproject.exception.UserNotFoundException;
 import org.example.tricountcloneproject.expense.Expense;
+import org.example.tricountcloneproject.response.ExpenseResponse;
 import org.example.tricountcloneproject.settlement.Settlement;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,7 +78,7 @@ public class MemberController {
 
     @ResponseBody
     @GetMapping("/expenses")
-    public List<Expense> findExpensesByMemberId(
+    public List<ExpenseResponse> findExpensesByMemberId(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER, required = false)
             Member loginMember) {
         return memberService.findExpensesById(loginMember.getMemberId());

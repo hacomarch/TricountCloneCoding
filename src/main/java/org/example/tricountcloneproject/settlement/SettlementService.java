@@ -5,6 +5,7 @@ import org.example.tricountcloneproject.exception.EntityNotFoundException;
 import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.member.MemberRepository;
+import org.example.tricountcloneproject.response.ExpenseResponse;
 import org.example.tricountcloneproject.response.MemberResponse;
 import org.example.tricountcloneproject.response.SettlementResultResponse;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,14 +38,21 @@ public class SettlementService {
         return settlementRepository.findMembersNicknameById(settlementId);
     }
 
-    public List<Expense> findExpensesById(Long settlementId, Long memberId) {
+    public List<ExpenseResponse> findExpensesById(Long settlementId, Long memberId) {
         List<Expense> expenses = settlementRepository.findExpensesById(settlementId);
         boolean match = expenses.stream()
                 .anyMatch(expense -> expense.getMemberId().equals(memberId));
         if (!match) {
             throw new ExpenseAccessDeniedException();
         }
-        return expenses;
+
+        return expenses.stream().map(expense -> {
+            String settlementName = settlementRepository.findById(expense.getSettlementId())
+                    .orElseThrow(() -> new EntityNotFoundException("Settlement"))
+                    .getName();
+            String nickname = memberRepository.findNicknameById(expense.getMemberId());
+            return new ExpenseResponse(settlementName, nickname, expense);
+        }).collect(Collectors.toList());
     }
 
     public List<Settlement> findAll() {
