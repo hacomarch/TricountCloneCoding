@@ -1,7 +1,6 @@
 package org.example.tricountcloneproject.expense;
 
 import lombok.RequiredArgsConstructor;
-import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 

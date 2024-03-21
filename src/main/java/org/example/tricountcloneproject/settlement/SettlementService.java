@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.tricountcloneproject.exception.EntityNotFoundException;
 import org.example.tricountcloneproject.exception.ExpenseAccessDeniedException;
 import org.example.tricountcloneproject.expense.Expense;
-import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.member.MemberRepository;
 import org.example.tricountcloneproject.response.MemberResponse;
 import org.example.tricountcloneproject.response.SettlementResponse;

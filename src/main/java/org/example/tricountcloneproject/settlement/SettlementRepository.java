@@ -2,7 +2,6 @@ package org.example.tricountcloneproject.settlement;
 
 import org.example.tricountcloneproject.expense.Expense;
 import org.example.tricountcloneproject.expense.ExpenseRepository;
-import org.example.tricountcloneproject.member.Member;
 import org.example.tricountcloneproject.response.MemberResponse;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
